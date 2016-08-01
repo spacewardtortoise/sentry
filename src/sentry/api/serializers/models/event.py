@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import six
+
 from datetime import datetime
 from django.utils import timezone
 
@@ -17,7 +19,7 @@ class EventSerializer(Serializer):
     def _get_entries(self, event, user, is_public=False):
         # XXX(dcramer): These are called entries for future-proofing
         interface_list = []
-        for key, interface in event.interfaces.iteritems():
+        for key, interface in six.iteritems(event.interfaces):
             # we treat user as a special contextual item
             if key in self._reserved_keys:
                 continue
@@ -80,7 +82,7 @@ class EventSerializer(Serializer):
                 'type': error['type'],
                 'message': message,
                 'data': {
-                    k: v for k, v in error.iteritems()
+                    k: v for k, v in six.iteritems(error)
                     if k != 'type'
                 },
             }

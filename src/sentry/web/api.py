@@ -1,6 +1,8 @@
 from __future__ import absolute_import, print_function
 
+import base64
 import logging
+import six
 import traceback
 
 from django.conf import settings
@@ -36,7 +38,7 @@ logger = logging.getLogger('sentry')
 
 # Transparent 1x1 gif
 # See http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever
-PIXEL = 'R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='.decode('base64')
+PIXEL = base64.b64decode('R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=')
 
 PROTOCOL_VERSIONS = frozenset(('2.0', '3', '4', '5', '6', '7'))
 
@@ -327,7 +329,7 @@ class StoreView(APIView):
 
         content_encoding = request.META.get('HTTP_CONTENT_ENCODING', '')
 
-        if isinstance(data, basestring):
+        if isinstance(data, six.string_types):
             if content_encoding == 'gzip':
                 data = helper.decompress_gzip(data)
             elif content_encoding == 'deflate':

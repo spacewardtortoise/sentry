@@ -4,9 +4,10 @@ import time
 import hmac
 import base64
 import qrcode
-import urllib
 import hashlib
+
 from datetime import datetime
+from six.moves.urllib.parse import quote
 
 from sentry.utils.dates import to_timestamp
 
@@ -66,7 +67,7 @@ class TOTP(object):
         ts = _get_ts(ts)
         if window is None:
             window = self.default_window
-        for i in xrange(-window, window + 1):
+        for i in range(-window, window + 1):
             counter = int(ts) // self.interval + i
             if constant_time_compare(otp, self.generate_otp(counter=counter)):
                 # Check for blacklisted counters after the constant time
@@ -85,8 +86,8 @@ class TOTP(object):
         if issuer is None:
             issuer = 'Sentry'
         rv = 'otpauth://totp/%s?issuer=%s&secret=%s' % (
-            urllib.quote(user.encode('utf-8')),
-            urllib.quote(issuer.encode('utf-8')),
+            quote(user.encode('utf-8')),
+            quote(issuer.encode('utf-8')),
             self.secret
         )
         if self.digits != 6:

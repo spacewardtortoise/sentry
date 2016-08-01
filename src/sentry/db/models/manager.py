@@ -56,13 +56,17 @@ def __prep_key(model, key):
 
 def make_key(model, prefix, kwargs):
     kwargs_bits = []
-    for k, v in sorted(kwargs.iteritems()):
+    for k, v in sorted(six.iteritems(kwargs)):
         k = __prep_key(model, k)
         v = smart_str(__prep_value(model, k, v))
         kwargs_bits.append('%s=%s' % (k, v))
     kwargs_bits = ':'.join(kwargs_bits)
 
-    return '%s:%s:%s' % (prefix, model.__name__, md5(kwargs_bits).hexdigest())
+    return '%s:%s:%s' % (
+        prefix,
+        model.__name__,
+        md5(kwargs_bits.encode('utf-8')).hexdigest()
+    )
 
 
 class BaseManager(Manager):
@@ -88,7 +92,7 @@ class BaseManager(Manager):
 
     def _generate_cache_version(self):
         return md5(
-            '&'.join(sorted(f.attname for f in self.model._meta.fields))
+            ('&'.join(sorted(f.attname for f in self.model._meta.fields))).encode('utf-8')
         ).hexdigest()[:3]
 
     __cache = property(_get_cache, _set_cache)
@@ -238,7 +242,7 @@ class BaseManager(Manager):
         if not self.cache_fields or len(kwargs) > 1:
             return self.get(**kwargs)
 
-        key, value = kwargs.items()[0]
+        key, value = next(six.iteritems(kwargs))
         pk_name = self.model._meta.pk.name
         if key == 'pk':
             key = pk_name

@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
-import itertools
-
 from collections import defaultdict
+from six.moves import zip
 
 from sentry.app import env
 from sentry.api.serializers import Serializer, register, serialize
@@ -85,7 +84,7 @@ class TeamWithProjectsSerializer(TeamSerializer):
             project._organization_cache = orgs[project.organization_id]
 
         project_map = defaultdict(list)
-        for project, data in itertools.izip(project_qs, serialize(project_qs, user)):
+        for project, data in zip(project_qs, serialize(project_qs, user)):
             project_map[project.team_id].append(data)
 
         result = super(TeamWithProjectsSerializer, self).get_attrs(item_list, user)

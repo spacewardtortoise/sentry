@@ -1,7 +1,9 @@
 from __future__ import absolute_import
 
 from hashlib import sha256
+
 import hmac
+import six
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -54,9 +56,9 @@ class ProjectReleaseTrackingView(ProjectView):
 
     def _get_signature(self, project_id, plugin_id, token):
         return hmac.new(
-            key=str(token),
+            key=six.binary_type(token),
             msg='{}-{}'.format(plugin_id, project_id),
-            digestmod=sha256
+            digestmod=sha256,
         ).hexdigest()
 
     def handle(self, request, organization, team, project):

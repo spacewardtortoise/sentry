@@ -8,6 +8,8 @@ sentry.models.file
 
 from __future__ import absolute_import
 
+import six
+
 from hashlib import sha1
 from uuid import uuid4
 
@@ -54,10 +56,10 @@ class FileBlob(Model):
         """
         size = 0
 
-        checksum = sha1('')
+        checksum = sha1(b'')
         for chunk in fileobj:
             size += len(chunk)
-            checksum.update(chunk)
+            checksum.update(chunk.encode('utf-8'))
         checksum = checksum.hexdigest()
 
         # TODO(dcramer): the database here is safe, but if this lock expires
@@ -170,13 +172,13 @@ class File(Model):
         """
         results = []
         offset = 0
-        checksum = sha1('')
+        checksum = sha1(b'')
 
         while True:
             contents = fileobj.read(blob_size)
             if not contents:
                 break
-            checksum.update(contents)
+            checksum.update(contents.encode('utf-8'))
 
             blob_fileobj = ContentFile(contents)
             blob = FileBlob.from_file(blob_fileobj)
@@ -227,7 +229,7 @@ class ChunkedFileBlobIndexWrapper(object):
 
     def _nextidx(self):
         try:
-            self._curidx = self._idxiter.next()
+            self._curidx = six.next(self._idxiter)
             self._curfile = self._curidx.blob.getfile()
         except StopIteration:
             self._curidx = None

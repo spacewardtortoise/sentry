@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import six
+
 from datetime import timedelta
 from django.utils import timezone
 from exam import fixture
@@ -17,7 +19,7 @@ class GroupListTest(APITestCase):
     def _parse_links(self, header):
         # links come in {url: {...attrs}}, but we need {rel: {...attrs}}
         links = {}
-        for url, attrs in parse_link_header(header).iteritems():
+        for url, attrs in six.iteritems(parse_link_header(header)):
             links[attrs['rel']] = attrs
             attrs['href'] = url
         return links

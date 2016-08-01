@@ -64,7 +64,7 @@ def trim(value, max_size=settings.SENTRY_MAX_VARIABLE_SIZE, max_depth=3,
     elif isinstance(value, dict):
         result = {}
         _size += 2
-        for k, v in value.iteritems():
+        for k, v in six.iteritems(value):
             trim_v = trim(v, _size=_size, **options)
             result[k] = trim_v
             _size += len(six.text_type(trim_v)) + 1

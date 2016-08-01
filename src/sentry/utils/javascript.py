@@ -53,7 +53,7 @@ def transform(objects, request=None):
     elif not isinstance(objects, (list, tuple)):
         return transform([objects], request=request)[0]
     # elif isinstance(obj, dict):
-    #     return dict((k, transform(v, request=request)) for k, v in obj.iteritems())
+    #     return dict((k, transform(v, request=request)) for k, v in six.iteritems(obj))
     t = transformers.get(type(objects[0]))
 
     if t:

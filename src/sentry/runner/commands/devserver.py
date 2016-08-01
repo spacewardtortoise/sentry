@@ -77,7 +77,7 @@ def devserver(reload, watchers, workers, bind):
         ]
 
     if needs_https and has_https:
-        from urlparse import urlparse
+        from six.moves.urllib.parse import urlparse
         parsed_url = urlparse(url_prefix)
         https_port = str(parsed_url.port or 443)
         https_host = parsed_url.hostname

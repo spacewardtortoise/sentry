@@ -10,7 +10,8 @@ from __future__ import absolute_import
 
 __all__ = ('Csp',)
 
-from urlparse import urlsplit, urlunsplit
+from six.moves.urllib.parse import urlsplit, urlunsplit
+
 from sentry.interfaces.base import Interface
 from sentry.utils import json
 from sentry.utils.cache import memoize

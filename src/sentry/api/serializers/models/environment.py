@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import six
+
 from collections import namedtuple
 from datetime import timedelta
 from django.utils import timezone
@@ -40,7 +42,7 @@ class GroupEnvironmentWithStatsSerializer(EnvironmentSerializer):
         for item in item_list:
             items[self.group.id].append(item.id)
 
-        for key, (segments, interval) in self.STATS_PERIODS.iteritems():
+        for key, (segments, interval) in six.iteritems(self.STATS_PERIODS):
             until = self.until or timezone.now()
             since = self.since or until - ((segments - 1) * interval)
 

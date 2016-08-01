@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import operator
 
 from django.db.models import Q
+from six.moves import reduce
 
 from sentry.api.serializers import Serializer, register
 from sentry.models import EventUser, GroupTagValue, TagKey, TagValue

@@ -48,4 +48,4 @@ class ReleaseFile(Model):
 
     @classmethod
     def get_ident(cls, name):
-        return sha1(name).hexdigest()
+        return sha1(name.encode('utf-8')).hexdigest()

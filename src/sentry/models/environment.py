@@ -33,7 +33,7 @@ class Environment(Model):
 
     @classmethod
     def get_cache_key(cls, project_id, name):
-        return 'env:1:%s:%s' % (project_id, md5(name).hexdigest())
+        return 'env:1:%s:%s' % (project_id, md5(name.encode('utf-8')).hexdigest())
 
     @classmethod
     def get_or_create(cls, project, name):

@@ -52,7 +52,7 @@ class Release(Model):
 
     @classmethod
     def get_cache_key(cls, project_id, version):
-        return 'release:2:%s:%s' % (project_id, md5(version).hexdigest())
+        return 'release:2:%s:%s' % (project_id, md5(version.encode('utf-8')).hexdigest())
 
     @classmethod
     def get(cls, project, version):

@@ -1,13 +1,13 @@
 from __future__ import absolute_import
 
 import itertools
-from hashlib import md5
 
 from rest_framework.response import Response
 
 from sentry import status_checks
 from sentry.api.base import Endpoint
 from sentry.api.permissions import SuperuserPermission
+from sentry.utils.hashlib import md5
 
 
 class SystemHealthEndpoint(Endpoint):

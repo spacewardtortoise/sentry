@@ -20,7 +20,7 @@ class ReleaseWebhookTest(TestCase):
         self.project = self.create_project(team=self.team)
         self.token = 'a2587e3af83411e4a28634363b8514c2'
         self.signature = hmac.new(
-            key=self.token,
+            key=self.token.encode('utf-8'),
             msg='dummy-{}'.format(self.project.id),
             digestmod=sha256,
         ).hexdigest()
@@ -74,7 +74,7 @@ class BuiltinReleaseWebhookTest(TestCase):
         self.project = self.create_project(team=self.team)
         self.token = 'a2587e3af83411e4a28634363b8514c2'
         self.signature = hmac.new(
-            key=self.token,
+            key=self.token.encode('utf-8'),
             msg='builtin-{}'.format(self.project.id),
             digestmod=sha256,
         ).hexdigest()

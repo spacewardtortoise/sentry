@@ -50,7 +50,7 @@ class EventUser(Model):
 
     def get_hash(self):
         value = self.ident or self.username or self.email or self.ip_address
-        return md5(value).hexdigest()
+        return md5(value.encode('utf-8')).hexdigest()
 
     @property
     def tag_value(self):

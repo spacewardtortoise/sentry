@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 try:
     from symsynd.driver import Driver, SymbolicationError
     from symsynd.report import ReportSymbolizer

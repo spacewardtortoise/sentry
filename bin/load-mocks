@@ -20,6 +20,7 @@ from sentry.models import (
     OrganizationMember, Project, Release, ReleaseFile, Team, User, UserReport,
     GroupRelease, Environment, ReleaseEnvironment
 )
+from sentry.utils.hashlib import sha1, md5
 from sentry.utils.samples import create_sample_event
 
 PLATFORMS = itertools.cycle([

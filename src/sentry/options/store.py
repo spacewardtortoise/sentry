@@ -8,6 +8,8 @@ sentry.options.store
 from __future__ import absolute_import, print_function
 
 import logging
+import six
+
 from collections import namedtuple
 from time import time
 from random import random
@@ -167,7 +169,7 @@ class OptionsStore(object):
             value = None
         except Exception as e:
             if not silent:
-                logger.exception(unicode(e))
+                logger.exception(six.text_type(e))
             value = None
         else:
             # we only attempt to populate the cache if we were previously
@@ -257,7 +259,7 @@ class OptionsStore(object):
         now = int(time())
 
         try:
-            for k, (_, _, grace) in self._local_cache.iteritems():
+            for k, (_, _, grace) in six.iteritems(self._local_cache):
                 if now > grace:
                     to_expire.append(k)
         except RuntimeError:
