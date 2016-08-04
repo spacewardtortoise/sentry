@@ -7,7 +7,9 @@ import Admin from './views/admin';
 import AdminBuffer from './views/adminBuffer';
 import AdminOrganizations from './views/adminOrganizations';
 import AdminOverview from './views/adminOverview';
+import AdminProjects from './views/adminProjects';
 import AdminSettings from './views/adminSettings';
+import AdminUsers from './views/adminUsers';
 import App from './views/app';
 import GroupActivity from './views/groupActivity';
 import GroupDetails from './views/groupDetails';
@@ -72,7 +74,9 @@ let routes = (
       <IndexRoute component={errorHandler(AdminOverview)} />
       <Route path="buffer/" component={errorHandler(AdminBuffer)} />
       <Route path="organizations/" component={errorHandler(AdminOrganizations)} />
+      <Route path="projects/" component={errorHandler(AdminProjects)} />
       <Route path="settings/" component={errorHandler(AdminSettings)} />
+      <Route path="users/" component={errorHandler(AdminUsers)} />
     </Route>
 
     <Redirect from="/share/group/:shareId/" to="/share/issue/:shareId/" />
